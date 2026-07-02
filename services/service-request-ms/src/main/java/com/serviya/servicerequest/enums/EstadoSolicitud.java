@@ -1,0 +1,13 @@
+package com.serviya.servicerequest.enums;
+
+public enum EstadoSolicitud {
+    ESPERANDO_PAGO_VISITA,
+    PENDIENTE_EVALUACION,
+    COTIZADO_ESPERANDO_PAGO,
+    PAGADO_BUSCANDO_TECNICO,
+    TECNICO_ASIGNADO,
+    EN_PROCESO,
+    COMPLETADO,
+    CANCELADO,
+    REEMBOLSADO
+}

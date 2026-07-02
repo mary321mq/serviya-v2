@@ -1,0 +1,18 @@
+name: user-ms-dev
+
+services:
+  postgres-user:
+    image: postgres:15
+    container_name: serviya-postgres-user
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: serviya
+      POSTGRES_PASSWORD: change-me-only-in-local-dev
+      POSTGRES_DB: serviya_user
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata-user:/var/lib/postgresql/data
+
+volumes:
+  pgdata-user:

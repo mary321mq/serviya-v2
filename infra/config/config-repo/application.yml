@@ -1,0 +1,33 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  tracing:
+    sampling:
+      probability: 1.0
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-},%X{correlationId:-}]"
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${SERVIYA_KEYCLOAK_ISSUER_URI:http://localhost:8089/realms/serviya}
+          jwk-set-uri: ${SERVIYA_KEYCLOAK_JWK_SET_URI:http://localhost:8089/realms/serviya/protocol/openid-connect/certs}
+  datasource:
+    username: ${SERVIYA_DATASOURCE_USERNAME:serviya}
+    password: ${SERVIYA_DATASOURCE_PASSWORD:change-me-only-in-local-dev}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:18761/eureka/}
+  instance:
+    prefer-ip-address: true

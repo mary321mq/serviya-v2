@@ -1,0 +1,47 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: review-ms
+  config:
+    import: "optional:configserver:${CONFIG_SERVER_URL:http://localhost:18888}"
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8089/realms/serviya
+  datasource:
+    url: ${SERVIYA_DATASOURCE_URL:jdbc:postgresql://localhost:5437/review_ms}
+    username: ${SERVIYA_DATASOURCE_USERNAME:serviya}
+    password: ${SERVIYA_DATASOURCE_PASSWORD:change-me-only-in-local-dev}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  file:
+    name: logs/review-ms.log
+  level:
+    root: INFO
+    org.springframework.web: DEBUG

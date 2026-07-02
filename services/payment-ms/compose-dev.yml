@@ -1,0 +1,18 @@
+name: payment-ms-dev
+
+services:
+  postgres-payment:
+    image: postgres:15
+    container_name: serviya-postgres-payment
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: serviya
+      POSTGRES_PASSWORD: serviya_password
+      POSTGRES_DB: serviya_payment
+    ports:
+      - "5435:5432"
+    volumes:
+      - pgdata-payment:/var/lib/postgresql/data
+
+volumes:
+  pgdata-payment:

@@ -1,0 +1,63 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ["localhost:9090"]
+        labels:
+          application: prometheus
+          environment: prod
+
+  - job_name: spring-boot
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ["serviya-config:8888"]
+        labels:
+          application: config-server
+          environment: prod
+      - targets: ["serviya-eureka:8761"]
+        labels:
+          application: eureka-server
+          environment: prod
+      - targets: ["serviya-gateway:8080"]
+        labels:
+          application: api-gateway
+          environment: prod
+      - targets: ["user-ms:8080"]
+        labels:
+          application: user-ms
+          environment: prod
+      - targets: ["payment-ms:8080"]
+        labels:
+          application: payment-ms
+          environment: prod
+      - targets: ["service-request-ms:8080"]
+        labels:
+          application: service-request-ms
+          environment: prod
+      - targets: ["technician-ms:8080"]
+        labels:
+          application: technician-ms
+          environment: prod
+      - targets: ["assignment-ms:8080"]
+        labels:
+          application: assignment-ms
+          environment: prod
+      - targets: ["notification-ms:8080"]
+        labels:
+          application: notification-ms
+          environment: prod
+      - targets: ["review-ms:8080"]
+        labels:
+          application: review-ms
+          environment: prod
+
+  - job_name: keycloak
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["serviya-keycloak:8080"]
+        labels:
+          application: keycloak
+          environment: prod

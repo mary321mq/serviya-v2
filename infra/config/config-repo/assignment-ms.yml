@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: assignment-ms
+  datasource:
+    url: ${SERVIYA_DATASOURCE_URL:jdbc:postgresql://localhost:5440/assignment_ms}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus

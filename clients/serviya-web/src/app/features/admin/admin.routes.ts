@@ -1,0 +1,43 @@
+import { Routes } from '@angular/router';
+
+import { AdminDashboardComponent } from './pages/admin-dashboard.component';
+import { AdminUsersPageComponent } from './pages/admin-users-page.component';
+import { TechnicianApplicationsPageComponent } from './pages/technician-applications-page.component';
+import { TechnicianApplicationDetailPageComponent } from './pages/technician-application-detail-page.component';
+import { CatalogCategoriesPageComponent } from './pages/catalog-categories-page.component';
+import { CatalogServicesPageComponent } from './pages/catalog-services-page.component';
+import { TariffsPageComponent } from './pages/tariffs-page.component';
+import { PaymentsPageComponent } from './pages/payments-page.component';
+import { SettlementsPageComponent } from './pages/settlements-page.component';
+import { EventsMonitorPageComponent } from './pages/events-monitor-page.component';
+import { AdminReviewDetailPageComponent } from './pages/review-detail-page.component';
+import { AdminReviewsPageComponent } from './pages/reviews-page.component';
+import { MonitorDashboardPageComponent } from './pages/monitor-dashboard-page.component';
+import { MonitorRequestsPageComponent } from './pages/monitor-requests-page.component';
+import { MonitorEventsPageComponent } from './pages/monitor-events-page.component';
+import { MonitorPaymentsPageComponent } from './pages/monitor-payments-page.component';
+import { AdminReportsPageComponent } from './pages/admin-reports-page.component';
+import { AdminBillingPageComponent } from './pages/admin-billing-page.component';
+import { AdminSettingsPageComponent } from './pages/admin-settings-page.component';
+
+export const adminRoutes: Routes = [
+  { path: '', component: AdminDashboardComponent },
+  { path: 'usuarios', component: AdminUsersPageComponent },
+  { path: 'trabajadores', component: AdminUsersPageComponent },
+  { path: 'tecnicos', component: AdminUsersPageComponent },
+  { path: 'tecnicos/postulaciones', component: TechnicianApplicationsPageComponent },
+  { path: 'tecnicos/postulaciones/:id', component: TechnicianApplicationDetailPageComponent },
+  { path: 'catalogo/categorias', component: CatalogCategoriesPageComponent },
+  { path: 'catalogo/servicios', component: CatalogServicesPageComponent },
+  { path: 'tarifas', component: TariffsPageComponent },
+  { path: 'pagos', component: MonitorPaymentsPageComponent },
+  { path: 'facturacion', component: AdminBillingPageComponent },
+  { path: 'liquidaciones', component: SettlementsPageComponent },
+  { path: 'eventos', component: MonitorEventsPageComponent },
+  { path: 'solicitudes', component: MonitorRequestsPageComponent },
+  { path: 'monitor', component: MonitorDashboardPageComponent },
+  { path: 'resenas', component: AdminReviewsPageComponent },
+  { path: 'resenas/:id', component: AdminReviewDetailPageComponent },
+  { path: 'reportes', component: AdminReportsPageComponent },
+  { path: 'configuracion', component: AdminSettingsPageComponent }
+];

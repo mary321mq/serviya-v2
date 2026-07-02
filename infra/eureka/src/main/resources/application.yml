@@ -1,0 +1,32 @@
+server:
+  port: 18761
+
+spring:
+  application:
+    name: eureka-server
+  config:
+    import: "optional:configserver:${SERVIYA_CONFIG_SERVER_URI:http://localhost:18888}"
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:18761/eureka/
+  server:
+    enable-self-preservation: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  file:
+    name: logs/eureka-server.log

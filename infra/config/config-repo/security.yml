@@ -1,0 +1,8 @@
+serviya:
+  security:
+    iam: keycloak
+    realm: serviya
+    issuer-uri: ${SERVIYA_KEYCLOAK_ISSUER_URI:http://localhost:8089/realms/serviya}
+    roles-claim: realm_access.roles
+    spring-role-prefix: ROLE_
+    correlation-id-header: X-Correlation-Id

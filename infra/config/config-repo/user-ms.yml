@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: user-ms
+  datasource:
+    url: ${SERVIYA_DATASOURCE_URL:jdbc:postgresql://localhost:5432/serviya_user}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  forward-headers-strategy: framework
+
+keycloak:
+  server-url: ${KEYCLOAK_SERVER_URL:http://localhost:8089}
+  realm: ${KEYCLOAK_REALM:serviya}
+  admin:
+    client-id: admin-cli
+    username: ${KEYCLOAK_ADMIN:admin}
+    password: ${KEYCLOAK_ADMIN_PASSWORD:admin}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus

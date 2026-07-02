@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: identity-integration-ms
+  datasource:
+    url: ${SERVIYA_DATASOURCE_URL:jdbc:postgresql://localhost:5431/identity_integration_ms}
+
+keycloak:
+  admin:
+    server-url: ${KEYCLOAK_ADMIN_SERVER_URL:http://localhost:8089}
+    realm: ${KEYCLOAK_ADMIN_REALM:serviya}
+    username: ${KEYCLOAK_ADMIN_USERNAME:admin}
+    password: ${KEYCLOAK_ADMIN_PASSWORD:change-me-only-in-local-dev}

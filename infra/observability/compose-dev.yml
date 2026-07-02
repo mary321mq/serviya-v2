@@ -1,0 +1,90 @@
+name: serviya-observability-dev
+
+services:
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    container_name: serviya-prometheus-dev
+    restart: unless-stopped
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle
+    ports:
+      - "19091:9090"
+    volumes:
+      - ./prometheus/prometheus-dev.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - serviya-dev-net
+
+  loki:
+    image: grafana/loki:3.4.1
+    container_name: serviya-loki-dev
+    restart: unless-stopped
+    command: -config.file=/etc/loki/config.yml
+    ports:
+      - "13101:3100"
+    volumes:
+      - ./loki/config.yml:/etc/loki/config.yml:ro
+      - loki-data:/loki
+    networks:
+      - serviya-dev-net
+
+  promtail:
+    image: grafana/promtail:3.4.1
+    container_name: serviya-promtail-dev
+    restart: unless-stopped
+    command:
+      - -config.file=/etc/promtail/config.yml
+      - -config.expand-env=true
+    environment:
+      SERVIYA_OBS_ENV: dev
+    volumes:
+      - ./promtail/config.yml:/etc/promtail/config.yml:ro
+      - ../config/logs:/var/log/serviya/config:ro
+      - ../eureka/logs:/var/log/serviya/eureka:ro
+      - ../gateway/logs:/var/log/serviya/gateway:ro
+      - ../../services/user-ms/logs:/var/log/serviya/user-ms:ro
+      - ../../services/service-request-ms/logs:/var/log/serviya/service-request-ms:ro
+      - ../../services/payment-ms/logs:/var/log/serviya/payment-ms:ro
+      - ../../services/technician-ms/logs:/var/log/serviya/technician-ms:ro
+      - ../../services/assignment-ms/logs:/var/log/serviya/assignment-ms:ro
+      - ../../services/notification-ms/logs:/var/log/serviya/notification-ms:ro
+      - ../../services/reviews-ms/logs:/var/log/serviya/review-ms:ro
+    depends_on:
+      - loki
+    networks:
+      - serviya-dev-net
+
+  grafana:
+    image: grafana/grafana:11.6.0
+    container_name: serviya-grafana-dev
+    restart: unless-stopped
+    ports:
+      - "13001:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      - prometheus
+      - loki
+    networks:
+      - serviya-dev-net
+
+networks:
+  serviya-dev-net:
+    name: serviya-dev-net
+    driver: bridge
+
+volumes:
+  prometheus-data:
+  loki-data:
+  grafana-data:

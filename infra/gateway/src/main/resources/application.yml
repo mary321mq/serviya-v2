@@ -1,0 +1,85 @@
+server:
+  port: 18080
+
+spring:
+  application:
+    name: api-gateway
+  config:
+    import: optional:configserver:${SERVIYA_CONFIG_SERVER_URI:http://localhost:18888}
+  cloud:
+    config:
+      name: gateway,gateway-security,security
+      fail-fast: false
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: user-ms
+              uri: ${SERVIYA_USER_MS_URI:lb://USER-MS}
+              predicates:
+                - Path=/user-ms/**
+              filters:
+                - StripPrefix=1
+            - id: technician-ms
+              uri: ${SERVIYA_TECHNICIAN_MS_URI:lb://TECHNICIAN-MS}
+              predicates:
+                - Path=/technician-ms/**
+              filters:
+                - StripPrefix=1
+            - id: service-request-ms
+              uri: ${SERVIYA_SERVICE_REQUEST_MS_URI:lb://SERVICE-REQUEST-MS}
+              predicates:
+                - Path=/service-request-ms/**
+              filters:
+                - StripPrefix=1
+            - id: assignment-ms
+              uri: ${SERVIYA_ASSIGNMENT_MS_URI:lb://ASSIGNMENT-MS}
+              predicates:
+                - Path=/assignment-ms/**
+              filters:
+                - StripPrefix=1
+            - id: payment-ms
+              uri: ${SERVIYA_PAYMENT_MS_URI:lb://PAYMENT-MS}
+              predicates:
+                - Path=/payment-ms/**
+              filters:
+                - StripPrefix=1
+            - id: review-ms
+              uri: ${SERVIYA_REVIEW_MS_URI:lb://REVIEW-MS}
+              predicates:
+                - Path=/review-ms/**
+              filters:
+                - StripPrefix=1
+            - id: notification-ms
+              uri: ${SERVIYA_NOTIFICATION_MS_URI:lb://NOTIFICATION-MS}
+              predicates:
+                - Path=/notification-ms/**
+              filters:
+                - StripPrefix=1
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${SERVIYA_KEYCLOAK_ISSUER_URI:http://localhost:8089/realms/serviya}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  file:
+    name: logs/gateway.log
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.web: TRACE
+

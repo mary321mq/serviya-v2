@@ -1,0 +1,39 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${SERVIYA_KEYCLOAK_ISSUER_URI:http://localhost:8089/realms/serviya}
+
+serviya:
+  gateway:
+    security:
+      public:
+        - /actuator/health
+        - /actuator/info
+        - /actuator/prometheus
+        - /service-request-ms/api/v1/solicitudes/evidencia/**
+      roles:
+        cliente:
+          read-write:
+            - /user-ms/**
+            - /service-request-ms/**
+            - /review-ms/**
+            - /technician-ms/api/v1/me/technician/application/**
+            - /technician-ms/api/v1/me/technician/documents/**
+            - /payment-ms/api/v1/pagos/**
+            - /notification-ms/api/v1/notifications/**
+          read-only:
+            - /payment-ms/**
+        tecnico:
+          read-write:
+            - /technician-ms/**
+            - /assignment-ms/**
+            - /review-ms/**
+            - /notification-ms/api/v1/notifications/**
+        trabajador:
+          read-write:
+            - /service-request-ms/api/v1/solicitudes/trabajador/**
+            - /notification-ms/api/v1/notifications/**
+        admin:
+          all: /**

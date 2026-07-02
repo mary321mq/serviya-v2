@@ -1,0 +1,18 @@
+name: service-request-ms-dev
+
+services:
+  postgres-service-request:
+    image: postgres:15
+    container_name: serviya-postgres-service-request
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: serviya
+      POSTGRES_PASSWORD: change-me-only-in-local-dev
+      POSTGRES_DB: service_request_ms
+    ports:
+      - "5434:5432"
+    volumes:
+      - pgdata-service-request:/var/lib/postgresql/data
+
+volumes:
+  pgdata-service-request:

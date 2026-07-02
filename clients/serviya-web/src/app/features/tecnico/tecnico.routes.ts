@@ -1,0 +1,39 @@
+import { Routes } from '@angular/router';
+
+import { ApplicationPageComponent } from './pages/application-page.component';
+import { AvailabilityPageComponent } from './pages/availability-page.component';
+import { DocumentsPageComponent } from './pages/documents-page.component';
+import { LocationPageComponent } from './pages/location-page.component';
+import { TecnicoPortfolioPageComponent } from './pages/tecnico-portfolio-page.component';
+import { OfferDetailPageComponent } from './pages/offer-detail-page.component';
+import { OffersPageComponent } from './pages/offers-page.component';
+import { RespondReviewPageComponent } from './pages/respond-review-page.component';
+import { TechnicianReviewsPageComponent } from './pages/reviews-page.component';
+import { SpecialtiesPageComponent } from './pages/specialties-page.component';
+import { TechnicianProfilePageComponent } from './pages/technician-profile-page.component';
+import { TecnicoDashboardComponent } from './pages/tecnico-dashboard.component';
+import { ServicesPageComponent } from './pages/services-page.component';
+import { ServiceDetailPageComponent } from './pages/service-detail-page.component';
+import { NotificationsPageComponent } from './pages/notifications-page.component';
+import { TechnicianWalletPageComponent } from './pages/technician-wallet-page.component';
+
+export const tecnicoRoutes: Routes = [
+  { path: '', component: TecnicoDashboardComponent },
+  { path: 'postulacion', component: ApplicationPageComponent },
+  { path: 'documentos', component: DocumentsPageComponent },
+  { path: 'perfil', component: TechnicianProfilePageComponent },
+  { path: 'especialidades', component: SpecialtiesPageComponent },
+  { path: 'disponibilidad', component: AvailabilityPageComponent },
+  { path: 'ubicacion', component: LocationPageComponent },
+  { path: 'portafolio', component: TecnicoPortfolioPageComponent },
+  { path: 'ofertas', component: OffersPageComponent },
+  { path: 'ofertas/:id', component: OfferDetailPageComponent },
+  { path: 'asignaciones', component: OffersPageComponent },
+  { path: 'asignaciones/:id', component: OfferDetailPageComponent },
+  { path: 'servicios', component: ServicesPageComponent },
+  { path: 'servicios/:id', component: ServiceDetailPageComponent },
+  { path: 'wallet', component: TechnicianWalletPageComponent },
+  { path: 'resenas', component: TechnicianReviewsPageComponent },
+  { path: 'resenas/:id/responder', component: RespondReviewPageComponent },
+  { path: 'notificaciones', component: NotificationsPageComponent }
+];

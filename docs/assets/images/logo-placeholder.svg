@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="ServiYa">
+  <rect width="128" height="128" rx="24" fill="#1f2a44"/>
+  <path d="M31 80h36l-9 28 39-54H63l11-34L31 80z" fill="#f8b23c"/>
+  <circle cx="42" cy="91" r="8" fill="#6254d9"/>
+  <circle cx="86" cy="39" r="8" fill="#6254d9"/>
+</svg>

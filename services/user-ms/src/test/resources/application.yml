@@ -1,0 +1,56 @@
+﻿spring:
+  application:
+    name: user-ms
+  datasource:
+    url: ${SERVIYA_DATASOURCE_URL:jdbc:h2:mem:testdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1}
+    driver-class-name: ${SERVIYA_DATASOURCE_DRIVER:org.h2.Driver}
+    username: ${SERVIYA_DATASOURCE_USERNAME:serviya}
+    password: ${SERVIYA_DATASOURCE_PASSWORD:change-me-only-in-local-dev}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/schema-messaging.sql
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${SERVIYA_KEYCLOAK_ISSUER_URI:http://localhost:8089/realms/serviya}
+  kafka:
+    bootstrap-servers: ${SERVIYA_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    client-id: ${spring.application.name}
+    admin:
+      auto-create: false
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+    consumer:
+      group-id: ${spring.application.name}
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.serviya.*
+        spring.json.value.default.type: com.serviya.user.infrastructure.messaging.event.EventEnvelope
+    listener:
+      auto-startup: ${SERVIYA_KAFKA_LISTENER_AUTO_STARTUP:false}
+
+serviya:
+  messaging:
+    kafka:
+      default-topic: serviya.service.events
+    outbox:
+      enabled: ${SERVIYA_OUTBOX_ENABLED:false}
+      poll-delay-ms: ${SERVIYA_OUTBOX_POLL_DELAY_MS:5000}
+    inbox:
+      enabled: ${SERVIYA_INBOX_ENABLED:true}
+
+server:
+  port: ${PORT:8082}
+
+
+

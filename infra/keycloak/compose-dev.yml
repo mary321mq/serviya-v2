@@ -1,0 +1,29 @@
+name: keycloak-dev
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.5
+    container_name: serviya-keycloak
+    command:
+      - start-dev
+      - --import-realm
+      - --http-port=8080
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HTTP_ENABLED: "true"
+      KC_HOSTNAME_STRICT: "false"
+      KC_HEALTH_ENABLED: "true"
+      KC_METRICS_ENABLED: "true"
+    ports:
+      - "8089:8080"
+    volumes:
+      - ./realm:/opt/keycloak/data/import:ro
+      - ./themes:/opt/keycloak/themes:ro
+    networks:
+      - serviya-dev-net
+
+networks:
+  serviya-dev-net:
+    name: serviya-dev-net
+    driver: bridge

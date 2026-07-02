@@ -1,0 +1,440 @@
+/* Reset Keycloak Default Styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+  background-color: #020617 !important;
+}
+
+/* Hide default Keycloak header and reset wrappers */
+#kc-header {
+  display: none !important;
+}
+
+.login-pf-page, 
+#kc-layout,
+#kc-layout-wrapper,
+#kc-content, 
+#kc-content-wrapper,
+.card-pf {
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Our Split Layout */
+.serviya-login-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+/* ----- LEFT PANEL ----- */
+.serviya-left-panel {
+  flex: 1;
+  position: relative;
+  background: radial-gradient(circle at 100% 100%, #ea580c 0%, transparent 50%), linear-gradient(135deg, #0a0f24 0%, #1e3a8a 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 60px;
+  overflow: hidden;
+}
+
+.serviya-left-content {
+  position: relative;
+  z-index: 10;
+  max-width: 500px;
+}
+
+.serviya-logo {
+  width: 180px;
+  height: auto;
+  max-width: 100%;
+  margin-bottom: -20px;
+  transform: scale(1.8);
+  transform-origin: left center;
+  object-fit: contain;
+}
+
+.serviya-title {
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.serviya-highlight {
+  color: #fb923c;
+}
+
+.serviya-subtitle {
+  font-size: 1rem;
+  opacity: 0.9;
+  line-height: 1.4;
+  margin-bottom: 30px;
+}
+
+.serviya-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.serviya-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.icon-circle {
+  width: 48px;
+  height: 48px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.icon-circle svg {
+  width: 24px;
+  height: 24px;
+}
+
+.feature-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-text strong {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.feature-text span {
+  font-size: 0.9rem;
+  opacity: 0.85;
+  line-height: 1.4;
+}
+
+.serviya-technician-bg {
+  position: absolute;
+  bottom: 0;
+  right: -5%;
+  width: 120%;
+  height: 85%;
+  background-position: bottom right;
+  background-repeat: no-repeat;
+  background-size: contain;
+  z-index: 1;
+  opacity: 0.95;
+  pointer-events: none;
+}
+
+/* ----- RIGHT PANEL ----- */
+.serviya-right-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #09090b; /* Dark background */
+  position: relative;
+  padding: 40px;
+}
+
+.serviya-form-card {
+  background: #0f172a; /* Slate 900 for card */
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #1e293b; /* Subtle border */
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+.register-card {
+  max-width: 550px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.user-avatar-icon {
+  width: 64px;
+  height: 64px;
+  background-color: #1e293b; /* Darker avatar background */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.form-header h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #f8fafc; /* White text */
+  margin: 0 0 8px 0;
+}
+
+.form-header p {
+  color: #94a3b8; /* Lighter slate text */
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f8fafc; /* White label */
+  margin-bottom: 8px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-icon-right {
+  position: absolute;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  background-color: #09090b; /* Dark input background */
+  border: 1px solid #1e293b; /* Dark border */
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #f8fafc; /* White text inside input */
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.input-wrapper .input-icon-right ~ .form-control {
+  padding-right: 40px;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #3b82f6; /* Blue border on focus */
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.form-control::placeholder {
+  color: #64748b;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  font-size: 0.9rem;
+}
+
+.checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #cbd5e1; /* Light gray text */
+  cursor: pointer;
+}
+
+.checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background-color: transparent;
+  border: 1px solid #475569;
+  accent-color: #3b82f6;
+  cursor: pointer;
+}
+
+.forgot-password a {
+  color: #60a5fa; /* Lighter blue for dark theme */
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.btn-primary {
+  width: 100%;
+  background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%); /* Gradient button */
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.form-register {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 0.95rem;
+  color: #cbd5e1; /* Light text */
+}
+
+.form-register a {
+  color: #60a5fa;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.form-register a:hover {
+  text-decoration: underline;
+}
+
+.form-footer {
+  position: absolute;
+  bottom: 24px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #64748b; /* Slate 500 */
+  width: 100%;
+}
+
+.form-footer a {
+  color: #475569; /* Slate 600 */
+  text-decoration: none;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+  color: #94a3b8; /* Lighter hover */
+}
+
+/* Divider & Google Button */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+  color: #475569;
+  font-size: 0.85rem;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #1e293b; /* Dark divider line */
+}
+.divider span {
+  padding: 0 10px;
+}
+
+.btn-google {
+  width: 100%;
+  background-color: transparent;
+  color: #f8fafc;
+  border: 1px solid #1e293b;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: background-color 0.2s;
+}
+.btn-google:hover {
+  background-color: #1e293b;
+}
+
+/* Alert messages */
+.alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+
+.alert-error {
+  background-color: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.alert-warning {
+  background-color: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.alert-success {
+  background-color: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .serviya-left-panel {
+    display: none;
+  }
+}

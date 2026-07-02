@@ -1,0 +1,30 @@
+server:
+  port: 18082
+
+spring:
+  application:
+    name: user-ms
+  profiles:
+    active: dev
+  config:
+    import: "optional:configserver:${CONFIG_SERVER_URL:http://localhost:18888}"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  file:
+    name: logs/user-ms.log
+  level:
+    root: INFO
+    com.serviya.user: DEBUG
+    org.springframework.web: TRACE

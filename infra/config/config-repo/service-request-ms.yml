@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: service-request-ms
+  datasource:
+    url: ${SERVIYA_DATASOURCE_URL:jdbc:postgresql://localhost:5434/service_request_ms}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: always
+      platform: postgresql
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus

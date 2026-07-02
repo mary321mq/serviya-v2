@@ -1,0 +1,73 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: serviya-logs
+    static_configs:
+      - targets: ["localhost"]
+        labels:
+          job: serviya/config-server
+          application: config-server
+          environment: ${SERVIYA_OBS_ENV}
+          __path__: /var/log/serviya/config/*.log
+      - targets: ["localhost"]
+        labels:
+          job: serviya/eureka-server
+          application: eureka-server
+          environment: ${SERVIYA_OBS_ENV}
+          __path__: /var/log/serviya/eureka/*.log
+      - targets: ["localhost"]
+        labels:
+          job: serviya/api-gateway
+          application: api-gateway
+          environment: ${SERVIYA_OBS_ENV}
+          __path__: /var/log/serviya/gateway/*.log
+      - targets: ["localhost"]
+        labels:
+          job: serviya/user-ms
+          application: user-ms
+          environment: ${SERVIYA_OBS_ENV}
+          __path__: /var/log/serviya/user-ms/*.log
+      - targets: ["localhost"]
+        labels:
+          job: serviya/service-request-ms
+          application: service-request-ms
+          environment: ${SERVIYA_OBS_ENV}
+          __path__: /var/log/serviya/service-request-ms/*.log
+      - targets: ["localhost"]
+        labels:
+          job: serviya/payment-ms
+          application: payment-ms
+          environment: ${SERVIYA_OBS_ENV}
+          __path__: /var/log/serviya/payment-ms/*.log
+      - targets: ["localhost"]
+        labels:
+          job: serviya/technician-ms
+          application: technician-ms
+          environment: ${SERVIYA_OBS_ENV}
+          __path__: /var/log/serviya/technician-ms/*.log
+      - targets: ["localhost"]
+        labels:
+          job: serviya/assignment-ms
+          application: assignment-ms
+          environment: ${SERVIYA_OBS_ENV}
+          __path__: /var/log/serviya/assignment-ms/*.log
+      - targets: ["localhost"]
+        labels:
+          job: serviya/notification-ms
+          application: notification-ms
+          environment: ${SERVIYA_OBS_ENV}
+          __path__: /var/log/serviya/notification-ms/*.log
+      - targets: ["localhost"]
+        labels:
+          job: serviya/review-ms
+          application: review-ms
+          environment: ${SERVIYA_OBS_ENV}
+          __path__: /var/log/serviya/review-ms/*.log

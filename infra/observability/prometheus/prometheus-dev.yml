@@ -1,0 +1,63 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: prometheus-dev
+    static_configs:
+      - targets: ["localhost:9090"]
+        labels:
+          application: prometheus
+          environment: dev
+
+  - job_name: spring-boot-dev
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ["host.docker.internal:18888"]
+        labels:
+          application: config-server
+          environment: dev
+      - targets: ["host.docker.internal:18761"]
+        labels:
+          application: eureka-server
+          environment: dev
+      - targets: ["host.docker.internal:18080"]
+        labels:
+          application: api-gateway
+          environment: dev
+      - targets: ["host.docker.internal:18082"]
+        labels:
+          application: user-ms
+          environment: dev
+      - targets: ["host.docker.internal:8083"]
+        labels:
+          application: payment-ms
+          environment: dev
+      - targets: ["host.docker.internal:8084"]
+        labels:
+          application: service-request-ms
+          environment: dev
+      - targets: ["host.docker.internal:8085"]
+        labels:
+          application: technician-ms
+          environment: dev
+      - targets: ["host.docker.internal:8086"]
+        labels:
+          application: assignment-ms
+          environment: dev
+      - targets: ["host.docker.internal:8087"]
+        labels:
+          application: notification-ms
+          environment: dev
+      - targets: ["host.docker.internal:8088"]
+        labels:
+          application: review-ms
+          environment: dev
+
+  - job_name: keycloak-dev
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["host.docker.internal:8089"]
+        labels:
+          application: keycloak
+          environment: dev

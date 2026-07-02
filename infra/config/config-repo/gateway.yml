@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          default-filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin RETAIN_FIRST
+          routes:
+            - id: user-ms
+              uri: ${SERVIYA_USER_MS_URI:lb://USER-MS}
+              predicates:
+                - Path=/user-ms/**
+              filters:
+                - StripPrefix=1
+            - id: technician-ms
+              uri: ${SERVIYA_TECHNICIAN_MS_URI:http://localhost:8085}
+              predicates:
+                - Path=/technician-ms/**
+              filters:
+                - StripPrefix=1
+            - id: service-request-ms
+              uri: ${SERVIYA_SERVICE_REQUEST_MS_URI:http://localhost:8084}
+              predicates:
+                - Path=/service-request-ms/**
+              filters:
+                - StripPrefix=1
+            - id: assignment-ms
+              uri: ${SERVIYA_ASSIGNMENT_MS_URI:http://localhost:8086}
+              predicates:
+                - Path=/assignment-ms/**
+              filters:
+                - StripPrefix=1
+            - id: payment-ms
+              uri: ${SERVIYA_PAYMENT_MS_URI:http://localhost:8083}
+              predicates:
+                - Path=/payment-ms/**
+              filters:
+                - StripPrefix=1
+            - id: review-ms
+              uri: ${SERVIYA_REVIEW_MS_URI:http://localhost:8088}
+              predicates:
+                - Path=/review-ms/**
+              filters:
+                - StripPrefix=1
+            - id: notification-ms
+              uri: ${SERVIYA_NOTIFICATION_MS_URI:http://localhost:8087}
+              predicates:
+                - Path=/notification-ms/**
+              filters:
+                - StripPrefix=1
