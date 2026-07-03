@@ -24,12 +24,26 @@ markdown_extensions:
   - toc:
       permalink: true
   - pymdownx.details
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.highlight
   - pymdownx.inlinehilite
 
+extra_javascript:
+  - https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js
+  - javascripts/mermaid-init.js
+
 nav:
   - Inicio: index.md
+  - Producto ServiYa v2:
+      - Arquitectura del producto: arquitectura.md
+      - Manual de ejecucion local: manual_ejecucion.md
+      - Observabilidad y diagnostico: observabilidad.md
+      - Walkthrough funcional: walkthrough.md
+      - Plan de implementacion: plan_implementacion.md
   - Unidad 1 (U1):
       - S01 - Vision del proyecto: u1/s01-vision.md
       - S02 - Requerimientos y alcance: u1/s02-requerimientos.md
@@ -62,4 +76,3 @@ nav:
       - Integrante 2: anexos/integrante-2.md
       - Integrante 3: anexos/integrante-3.md
       - Integrante 4: anexos/integrante-4.md
-

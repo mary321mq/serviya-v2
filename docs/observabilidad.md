@@ -1,143 +1,114 @@
-# Observabilidad
+﻿# Observabilidad y diagnostico
 
-ServiYa usa Prometheus y Grafana para monitorear servicios, trafico HTTP, latencia y errores.
+ServiYa v2 incorpora observabilidad para que la defensa tecnica no dependa solo de pantallas. La plataforma expone salud, metricas HTTP, latencia, errores y logs mediante Actuator, Prometheus, Loki, Promtail y Grafana.
+
+## Arquitectura de observabilidad
+
+```mermaid
+flowchart LR
+  MS["Spring Boot services\n/actuator/health\n/actuator/prometheus"] --> PROM["Prometheus\nlocalhost:19091"]
+  MS --> LOGS["logs/*.log"]
+  LOGS --> PROMTAIL["Promtail"]
+  PROMTAIL --> LOKI["Loki\nlocalhost:13101"]
+  PROM --> GRAF["Grafana\nlocalhost:13001"]
+  LOKI --> GRAF
+  KEY["Keycloak\n/metrics"] --> PROM
+```
 
 ## URLs locales
 
-| Herramienta | URL |
+| Herramienta | URL | Uso en defensa |
+| --- | --- | --- |
+| Prometheus | `http://localhost:19091` | Revisar targets, consultas `up`, requests y latencia. |
+| Grafana | `http://localhost:13001` | Mostrar dashboard de salud, trafico y errores. |
+| Loki | `http://localhost:13101` | Almacenar logs consultables desde Grafana. |
+| Eureka | `http://localhost:18761` | Confirmar registro de servicios. |
+
+Credenciales Grafana en desarrollo:
+
+```text
+usuario: admin
+password: admin
+```
+
+## Targets esperados en Prometheus
+
+Prometheus toma metricas desde `infra/observability/prometheus/prometheus-dev.yml`.
+
+| Target | Aplicacion |
 | --- | --- |
-| Prometheus | `http://localhost:19091` |
-| Grafana | `http://localhost:13001` |
+| `host.docker.internal:18888` | `config-server` |
+| `host.docker.internal:18761` | `eureka-server` |
+| `host.docker.internal:18080` | `api-gateway` |
+| `host.docker.internal:18082` | `user-ms` |
+| `host.docker.internal:8083` | `payment-ms` |
+| `host.docker.internal:8084` | `service-request-ms` |
+| `host.docker.internal:8085` | `technician-ms` |
+| `host.docker.internal:8086` | `assignment-ms` |
+| `host.docker.internal:8087` | `notification-ms` |
+| `host.docker.internal:8088` | `review-ms` |
+| `host.docker.internal:8089` | `keycloak` |
 
 ## Que debe mostrar Grafana
 
-El dashboard principal esta organizado por secciones:
-
-| Seccion | Paneles |
-| --- | --- |
-| Salud general | Estado UP/DOWN de servicios. |
-| Actividad en tiempo real | Barras de requests y resumen operativo por servicio. |
-| Rendimiento HTTP | Trafico HTTP por segundo y latencia p95. |
-| Recursos JVM | CPU del proceso y memoria JVM usada. |
-| Errores y diagnostico | Errores 4xx/5xx, gauges de salud y logs relevantes. |
-
-### Estado de servicios
-
-Debe mostrar cada servicio como activo/inactivo segun Prometheus pueda recolectar metricas.
-
-Servicios esperados:
-
-- `api-gateway`
-- `assignment-ms`
-- `config-server`
-- `eureka-server`
-- `keycloak`
-- `notification-ms`
-- `payment-ms`
-- `prometheus`
-- `review-ms`
-- `service-request-ms`
-- `technician-ms`
-- `user-ms`
-
-### Trafico HTTP por segundo
-
-Mide cuantas peticiones HTTP procesa cada servicio por segundo.
-
-Utilidad:
-
-- Ver si el gateway esta recibiendo trafico.
-- Detectar servicios sin uso.
-- Confirmar que frontend esta consumiendo backend.
-
-### Requests actuales por servicio
-
-Panel de barras para comparar rapidamente que microservicio esta recibiendo mas trafico en la ventana actual.
-
-Consulta base:
-
-```promql
-sum by (application) (rate(http_server_requests_seconds_count{application=~"$application"}[5m]))
-```
-
-### Resumen operativo por servicio
-
-Tabla consolidada con:
-
-- Estado UP/DOWN.
-- Requests por segundo.
-- Errores 4xx/5xx por segundo.
-- Latencia p95.
-
-Este panel sirve para defensa tecnica porque permite explicar salud, carga, errores y latencia en una sola vista.
-
-### Errores HTTP 4xx/5xx
-
-Debe mostrar errores por servicio.
-
-Interpretacion:
-
-- `4xx`: problema de cliente, permisos, token, ruta o validacion.
-- `5xx`: problema interno del microservicio, excepcion o dependencia caida.
-
-### Latencia HTTP p95
-
-Muestra el percentil 95 de duracion de requests.
-
-Interpretacion:
-
-- Si p95 sube, el servicio esta lento para la mayoria de usuarios.
-- Revisar base de datos, llamadas Feign y endpoints con mas carga.
-
-### Gauges de salud
-
-Se agregaron tres medidores:
-
-| Gauge | Que mide | Interpretacion |
+| Seccion | Paneles | Interpretacion |
 | --- | --- | --- |
-| Disponibilidad de servicios | Promedio de `up` para los servicios seleccionados | Cerca de 1.0 indica servicios levantados. |
-| Tasa de errores 4xx/5xx | Errores HTTP por segundo | Si sube, revisar permisos, rutas o excepciones. |
-| Latencia p95 maxima | Mayor p95 entre servicios seleccionados | Si pasa umbral amarillo/rojo, revisar servicio lento. |
+| Salud general | Estado UP/DOWN por servicio | Permite detectar servicios caidos durante la demo. |
+| Trafico HTTP | Requests por segundo por aplicacion | Demuestra que el frontend esta generando llamadas reales. |
+| Latencia | Percentil p95 | Identifica servicios lentos o endpoints pesados. |
+| Errores | Conteo 4xx/5xx | Separa errores de permisos/rutas de fallos internos. |
+| JVM | CPU y memoria | Ayuda a sustentar estabilidad del backend. |
+| Logs | Entradas por servicio | Permite revisar trazas y excepciones. |
 
-## Recargar dashboard provisionado
+## Consultas PromQL utiles
 
-Grafana lee el dashboard desde:
-
-```text
-infra/observability/grafana/dashboards/serviya-overview.json
-```
-
-En desarrollo, reinicia Grafana para forzar la recarga:
-
-```powershell
-cd C:\ServiYa\serviya-v2\infra\observability
-docker compose -f compose-dev.yml restart grafana
-```
-
-Luego abre:
-
-```text
-http://localhost:13001
-```
-
-## Verificacion rapida en Prometheus
-
-Prueba estas consultas:
+Estado de targets:
 
 ```promql
 up
 ```
 
-```promql
-http_server_requests_seconds_count
-```
+Requests por segundo:
 
 ```promql
-http_server_requests_seconds_sum
+sum by (application) (rate(http_server_requests_seconds_count[5m]))
 ```
+
+Errores 4xx y 5xx:
 
 ```promql
-http_server_requests_seconds_bucket
+sum by (application, status) (rate(http_server_requests_seconds_count{status=~"4..|5.."}[5m]))
 ```
 
-Si no aparece un servicio, normalmente falta levantarlo, exponer Actuator o registrar su target en Prometheus.
+Latencia p95:
+
+```promql
+histogram_quantile(0.95, sum by (le, application) (rate(http_server_requests_seconds_bucket[5m])))
+```
+
+## Pasos de diagnostico durante la defensa
+
+1. Abrir Eureka y confirmar que los servicios estan registrados.
+2. Abrir Prometheus > Status > Targets y verificar que los targets esten `UP`.
+3. Abrir Grafana y mostrar el dashboard general.
+4. Ejecutar una accion en Angular, por ejemplo crear o consultar una solicitud.
+5. Volver a Grafana y mostrar que suben los requests del gateway y del microservicio correspondiente.
+6. Si ocurre un error, revisar si es `401/403`, `404`, `5xx` o si un servicio esta caido.
+
+## Diagnostico por sintomas
+
+| Sintoma | Donde mirar | Posible causa |
+| --- | --- | --- |
+| Frontend carga pero no trae datos | Consola navegador, Gateway, Grafana | Token invalido, ruta incorrecta o gateway apagado. |
+| Servicio no aparece en Grafana | Prometheus Targets | Servicio no levantado o Actuator no expuesto. |
+| `401`/`403` | Keycloak, token JWT, roles | Usuario sin rol requerido o sesion vencida. |
+| `5xx` | Logs del microservicio y Loki | Excepcion interna, base caida o dependencia no disponible. |
+| Alta latencia | Panel p95 y logs | Base de datos lenta, llamada Feign o endpoint pesado. |
+
+## Evidencias para entregar
+
+- Captura de Grafana con todos los servicios esperados.
+- Captura de Prometheus Targets en estado `UP`.
+- Captura de Eureka con microservicios registrados.
+- Captura del flujo funcional en Angular.
+- PDF exportado desde MkDocs con esta guia y la arquitectura del producto.
