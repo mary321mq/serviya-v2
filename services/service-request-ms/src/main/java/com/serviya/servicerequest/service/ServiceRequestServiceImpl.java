@@ -448,6 +448,22 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
         if (!tecnicoId.equals(req.getTecnicoId())) {
             throw new IllegalArgumentException("El tecnico no corresponde a esta solicitud");
         }
+
+        // Validate state before proceeding
+        com.serviya.servicerequest.enums.EstadoSolicitud estado = req.getEstadoSolicitud();
+        if (estado == com.serviya.servicerequest.enums.EstadoSolicitud.COMPLETADO ||
+            estado == com.serviya.servicerequest.enums.EstadoSolicitud.CANCELADO ||
+            estado == com.serviya.servicerequest.enums.EstadoSolicitud.REEMBOLSADO) {
+            return; // Already in terminal state — idempotent, no error
+        }
+
+        // Idempotency: if tecnico already confirmed, skip
+        if (req.isTecnicoConfirmoFin()) {
+            if (req.isClienteConfirmoFin()) {
+                marcarComoCompletado(req);
+            }
+            return;
+        }
         
         req.setTecnicoConfirmoFin(true);
 
@@ -473,6 +489,22 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
             
         if (!clienteId.equals(req.getClienteId())) {
             throw new IllegalArgumentException("No puedes terminar una solicitud que no te pertenece");
+        }
+
+        // Validate state before proceeding
+        com.serviya.servicerequest.enums.EstadoSolicitud estado = req.getEstadoSolicitud();
+        if (estado == com.serviya.servicerequest.enums.EstadoSolicitud.COMPLETADO ||
+            estado == com.serviya.servicerequest.enums.EstadoSolicitud.CANCELADO ||
+            estado == com.serviya.servicerequest.enums.EstadoSolicitud.REEMBOLSADO) {
+            return; // Already in terminal state — idempotent, no error
+        }
+
+        // Idempotency: if cliente already confirmed, skip
+        if (req.isClienteConfirmoFin()) {
+            if (req.isTecnicoConfirmoFin()) {
+                marcarComoCompletado(req);
+            }
+            return;
         }
         
         req.setClienteConfirmoFin(true);
