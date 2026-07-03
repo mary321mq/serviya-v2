@@ -1,15 +1,28 @@
-# Entregables BL
+﻿# Entregables BL
 
-La defensa tecnica S15 exige tres entregables grupales.
+La defensa tecnica S15 exige tres entregables grupales. Este archivo deja trazabilidad de lo que debe estar en BL y de lo que queda evidenciado en GitHub.
+
+## Resumen de entrega
+
+| Entregable | Destino oficial | Evidencia en repo |
+| --- | --- | --- |
+| Documentacion MkDocs | GitHub Pages y BL si se solicita enlace | `docs/`, `mkdocs.yml`, `.github/workflows/docs.yml` |
+| PDF grupal desde documentacion | BLearning (BL) | `docs/defensa-s15/entregables-finales/S15_ServiYa_U3_Docs.pdf` |
+| Presentacion final | BLearning (BL) | `docs/defensa-s15/entregables-finales/ProductoCurso_ServiYa_Presentacion.pptx` |
 
 ## 1. Sitio de documentacion
 
 Debe estar en el repositorio y publicado como sitio navegable.
 
+- Repositorio: <https://github.com/mary321mq/serviya-v2>
+- Sitio esperado de GitHub Pages: <https://mary321mq.github.io/serviya-v2/>
+- Workflow: `.github/workflows/docs.yml`
+
 Comando local:
 
 ```powershell
-cd C:\ServiYa\serviya-v2
+cd "C:\Users\ACER\Downloads\nuestro sistema\serviya-v2\serviya-v2"
+pip install -r requirements-docs.txt
 mkdocs serve
 ```
 
@@ -21,23 +34,14 @@ http://localhost:8000
 
 ### Publicacion en GitHub Pages
 
-Se agrego el workflow:
-
-```text
-.github/workflows/docs.yml
-```
-
-Para usarlo:
-
-1. Subir los cambios al repositorio.
-2. Entrar a GitHub, seccion "Settings" -> "Pages".
-3. En "Build and deployment", seleccionar "GitHub Actions".
-4. Ejecutar el workflow "Deploy MkDocs" o hacer push a `main`/`master`.
-5. Copiar el enlace publicado y colocarlo en el `index`.
+1. Entrar a GitHub, seccion `Settings` -> `Pages`.
+2. En `Build and deployment`, seleccionar `GitHub Actions`.
+3. Ejecutar el workflow `Deploy MkDocs` o hacer push a `main`.
+4. Verificar el enlace publicado.
 
 ## 2. PDF grupal desde la documentacion
 
-Nombre solicitado:
+Nombre solicitado por la guia del curso:
 
 ```text
 S15_Equipo##_U3_Docs.pdf
@@ -45,7 +49,7 @@ S15_Equipo##_U3_Docs.pdf
 
 Forma aceptada:
 
-1. Abrir el sitio MkDocs.
+1. Abrir el sitio MkDocs publicado o local.
 2. Usar imprimir del navegador.
 3. Guardar como PDF.
 4. Subir a BL.
@@ -55,13 +59,19 @@ Forma aceptada:
 
 ## 3. Presentacion final
 
-Nombre solicitado:
+Archivo disponible en el repo:
+
+```text
+docs/defensa-s15/entregables-finales/ProductoCurso_ServiYa_Presentacion.pptx
+```
+
+Nombre solicitado por la guia del curso si se exporta como PDF:
 
 ```text
 ProductoCurso_Equipo##_Presentacion.pdf
 ```
 
-Contenido minimo:
+Contenido minimo esperado:
 
 - Nombre del proyecto y equipo.
 - Problema o flujo de negocio.
@@ -79,9 +89,10 @@ Contenido minimo:
 
 | Campo | Valor |
 | --- | --- |
-| Equipo | Pendiente |
+| Equipo | Pendiente de confirmar |
 | Proyecto | ServiYa |
-| Link GitHub | Pendiente |
-| Link documentacion | Pendiente |
-| Rama integrada evaluada | Pendiente |
-| Evidencia de merge | Pendiente |
+| Link GitHub | <https://github.com/mary321mq/serviya-v2> |
+| Link documentacion | <https://mary321mq.github.io/serviya-v2/> |
+| Rama integrada evaluada | `main` |
+| Evidencia de merge | Historial de commits y rama `main` en GitHub |
+

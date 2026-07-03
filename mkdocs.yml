@@ -1,8 +1,9 @@
-site_name: ServiYa - Documentacion Tecnica
+﻿site_name: ServiYa - Documentacion Tecnica
 site_description: Proyecto Final de Sistemas Distribuidos
 site_author: Equipo ServiYa
-repo_url: https://github.com/aylatitotito-dev/SERVIYA
-repo_name: aylatitotito-dev/SERVIYA
+site_url: https://mary321mq.github.io/serviya-v2/
+repo_url: https://github.com/mary321mq/serviya-v2
+repo_name: mary321mq/serviya-v2
 
 theme:
   name: material
@@ -47,9 +48,18 @@ nav:
       - S13 - Pruebas e integracion: u3/s13-pruebas-integracion.md
       - S14 - Estabilizacion y hardening: u3/s14-estabilizacion.md
       - S15 - Defensa Tecnica: u3/s15-defensa-tecnica.md
+  - Defensa S15:
+      - Entregables finales: defensa-s15/entregables.md
+      - Guion de presentacion: defensa-s15/guion-presentacion.md
+      - Demo tecnica: defensa-s15/demo-tecnica.md
+      - Evidencia GitHub: defensa-s15/evidencia-github.md
+      - Topics del repositorio: defensa-s15/topics-repositorio.md
+      - Rubrica: defensa-s15/rubrica.md
+      - Checklist: defensa-s15/checklist.md
   - Anexos Individuales:
       - Plantilla de anexo individual: anexos/plantilla-anexo-individual.md
       - Integrante 1: anexos/integrante-1.md
       - Integrante 2: anexos/integrante-2.md
       - Integrante 3: anexos/integrante-3.md
       - Integrante 4: anexos/integrante-4.md
+
